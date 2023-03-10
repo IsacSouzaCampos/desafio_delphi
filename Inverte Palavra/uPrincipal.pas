@@ -45,14 +45,29 @@ begin
         strInverted := strInverted + Edit1.Text[I];
 
       Edit2.Text := strInverted;
+      Edit1.SetFocus;
     end
   else
-    ShowMessage('Palavra Original não informada. Digite uma palavra/frase' +
+    begin
+      ShowMessage('Palavra Original não informada. Digite uma palavra/frase' +
                   ' a ser invertida!');
+      Edit1.SetFocus;
+    end;
 end;
 
 procedure TForm1.Edit1Exit(Sender: TObject);
 begin
+  if Edit1.Text = '' then
+    begin
+      Label1.Font.Color := clMaroon;
+      Edit1.Color       := clCream
+    end
+  else
+    begin
+      Label1.Font.Color := clWindowText;
+      Edit1.Color       := clWindow
+    end;
+
   Button1.SetFocus;
 end;
 
