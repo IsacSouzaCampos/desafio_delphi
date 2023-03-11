@@ -133,7 +133,8 @@ begin
   Result := '';
 
   if ((dblSide1 + dblSide2) <= dblSide3) or
-      ((dblSide1 + dblSide3) <= dblSide2) then
+      ((dblSide1 + dblSide3) <= dblSide2) or
+      ((dblSide2 + dblSide3) <= dblSide1) then
       begin
         ShowMessage('Os lados definidos não formam um triângulo válido.' +
                     ' Escolha outros valores!');
