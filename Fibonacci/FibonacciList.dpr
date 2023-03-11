@@ -1,4 +1,4 @@
-program Fibonacci;
+program FibonacciList;
 
 uses
   Vcl.Forms,
