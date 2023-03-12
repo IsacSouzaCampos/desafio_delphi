@@ -59,7 +59,7 @@ procedure TForm1.Edit1Exit(Sender: TObject);
 begin
   if Edit1.Text = '' then
     begin
-      Label1.Font.Color := clMaroon;
+      Label1.Font.Color := clRed;
       Edit1.Color       := clCream
     end
   else

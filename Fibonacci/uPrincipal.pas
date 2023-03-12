@@ -29,6 +29,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Edit1Exit(Sender: TObject);
   private
     { Private declarations }
     Fibonacci: TFibonacci;
@@ -76,6 +77,20 @@ begin
     end;
 
     Edit1.SetFocus;
+end;
+
+procedure TForm1.Edit1Exit(Sender: TObject);
+begin
+  if Edit1.Text = '' then
+    begin
+      Label2.Font.Color := clRed;
+      Edit1.Color       := clCream;
+    end
+  else
+    begin
+      Label2.Font.Color := clWindowText;
+      Edit1.Color       := clWindow;
+    end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

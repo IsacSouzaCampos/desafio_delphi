@@ -46,6 +46,7 @@ object Form1: TForm1
     Height = 21
     NumbersOnly = True
     TabOrder = 0
+    OnExit = Edit1Exit
   end
   object Button1: TButton
     Left = 8

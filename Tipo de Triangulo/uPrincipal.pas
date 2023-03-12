@@ -73,7 +73,7 @@ procedure TForm1.Edit1Exit(Sender: TObject);
 begin
   if Edit1.Text = '' then
     begin
-      Label1.Font.Color := clMaroon;
+      Label1.Font.Color := clRed;
       Edit1.Color       := clCream
     end
   else
@@ -87,7 +87,7 @@ procedure TForm1.Edit2Exit(Sender: TObject);
 begin
   if Edit2.Text = '' then
     begin
-      Label2.Font.Color := clMaroon;
+      Label2.Font.Color := clRed;
       Edit2.Color       := clCream
     end
   else
@@ -101,7 +101,7 @@ procedure TForm1.Edit3Exit(Sender: TObject);
 begin
   if Edit3.Text = '' then
     begin
-      Label3.Font.Color := clMaroon;
+      Label3.Font.Color := clRed;
       Edit3.Color       := clCream
     end
   else
