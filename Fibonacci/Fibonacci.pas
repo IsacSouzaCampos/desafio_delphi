@@ -8,7 +8,7 @@ type
   TFibonacci = class
     IntegerArray: TIntegerArray;
 
-    function Linear   : TIntegerArray;
+    function Linear(intPosition: Integer)   : TIntegerArray;
     function Recursive(intPosition: Integer): TIntegerArray;
   end;
 
@@ -16,9 +16,38 @@ implementation
 
 { TFibonacci }
 
-function TFibonacci.Linear: TIntegerArray;
+function TFibonacci.Linear(intPosition: Integer): TIntegerArray;
+var
+  I         : Integer;
+  intLength : Integer;
+  intPrev1  : Integer;
+  intPrev2  : Integer;
+  intCurrent: Integer;
 begin
+  IntegerArray := [];
+  SetLength(IntegerArray, 1);
 
+  IntegerArray[0] := 0;
+
+  if intPosition > 1 then
+    begin
+      SetLength(IntegerArray, 2);
+      IntegerArray[1] := 1;
+    end;
+
+  intPrev1 := 1;
+  intPrev2 := 0;
+  for I := 2 to intPosition - 1 do
+    begin
+      intLength := Length(IntegerArray);
+      SetLength(IntegerArray, intLength + 1);
+
+      intCurrent := intPrev1 + intPrev2;
+      IntegerArray[intLength] := intCurrent;
+
+      intPrev2 := intPrev1;
+      intPrev1 := intCurrent;
+    end;
 end;
 
 function TFibonacci.Recursive(intPosition: Integer): TIntegerArray;
@@ -26,6 +55,7 @@ var
   intAux, intLength: Integer;
 begin
   IntegerArray := [];
+  SetLength(IntegerArray, 0);
 
   if intPosition = 0 then
     begin

@@ -27,6 +27,8 @@ type
     RadioGroup1: TRadioGroup;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     Fibonacci: TFibonacci;
@@ -44,31 +46,54 @@ implementation
 procedure TForm1.Button1Click(Sender: TObject);
 var
   intPosition    : Integer;
-  strLastValue   : String;
-  arrIntegerArray: TIntegerArray;
   I              : Integer;
 begin
   ListBox1.Items.Clear;
-  intPosition := StrToInt(Trim(Edit1.Text));
 
-  if RadioGroup1.ItemIndex = 0 then
-    ShowMessage('Linear')
-  else if RadioGroup1.ItemIndex = 1 then
-    begin
-      if intPosition <> 0 then
-        begin
-          Fibonacci.Recursive(intPosition + 1);
-          for I in Fibonacci.IntegerArray do
-            ListBox1.Items.Add(IntToStr(I))
-        end;
-    end
+  if Edit1.Text = '' then
+    ShowMessage('Defina uma posição da lista de Fibonacci!')
   else
-    ShowMessage('Escolha o tipo de algoritmo a ser executado!');
+    begin
+      intPosition := StrToInt(Trim(Edit1.Text));
+
+      if intPosition > 0 then
+        begin
+          if RadioGroup1.ItemIndex = 0 then
+            begin
+              Fibonacci.Linear(intPosition);
+              for I in Fibonacci.IntegerArray do
+                ListBox1.Items.Add(IntToStr(I))
+            end
+          else if RadioGroup1.ItemIndex = 1 then
+            begin
+              Fibonacci.Recursive(intPosition + 1);
+              for I in Fibonacci.IntegerArray do
+                ListBox1.Items.Add(IntToStr(I))
+            end
+          else
+            ShowMessage('Escolha o tipo de algoritmo a ser executado!');
+        end;
+    end;
+
+    Edit1.SetFocus;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Fibonacci := TFibonacci.Create;
+end;
+
+procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 then
+    Perform(Wm_NextDlgCtl, 0, 0);
+end;
+
+procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then
+    key := #0;
 end;
 
 end.
