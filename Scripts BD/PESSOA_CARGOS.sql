@@ -1,3 +1,5 @@
+-- O campo CPF foi escolhido como chave primária por se tratar de
+-- um identificador único.
 CREATE TABLE PESSOA(
     CPF VARCHAR(14),
     NOME_COMPLETO VARCHAR(100) NOT NULL,
@@ -5,6 +7,9 @@ CREATE TABLE PESSOA(
     PRIMARY KEY(CPF)
 );
 
+-- O ID dos cargos será definido manualmente, mas o correto num ambiente de produção real
+-- seria utilizar uma combinação de trigger com generator para gerar o comportamento de um
+-- AUTO INCREMENT.
 CREATE TABLE CARGOS(
     ID INT,
     CARGO VARCHAR(100) NOT NULL,
