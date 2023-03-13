@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'Fatorial'
   ClientHeight = 123
   ClientWidth = 260
   Color = clBtnFace
@@ -53,7 +53,7 @@ object Form1: TForm1
     Width = 123
     Height = 25
     Caption = 'Calcular'
-    TabOrder = 1
+    TabOrder = 2
     OnClick = Button1Click
   end
   object RadioGroup1: TRadioGroup
@@ -66,6 +66,6 @@ object Form1: TForm1
     Items.Strings = (
       'Linear'
       'Recursivo')
-    TabOrder = 2
+    TabOrder = 1
   end
 end

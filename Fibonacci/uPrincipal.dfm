@@ -54,7 +54,7 @@ object Form1: TForm1
     Width = 113
     Height = 25
     Caption = 'Gerar'
-    TabOrder = 1
+    TabOrder = 2
     OnClick = Button1Click
   end
   object RadioGroup1: TRadioGroup
@@ -67,6 +67,6 @@ object Form1: TForm1
     Items.Strings = (
       'Linear'
       'Recursivo')
-    TabOrder = 2
+    TabOrder = 1
   end
 end
