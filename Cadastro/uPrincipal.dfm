@@ -1,6 +1,8 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  Anchors = []
+  BorderStyle = bsSizeToolWin
   Caption = 'Cadastro'
   ClientHeight = 326
   ClientWidth = 298
@@ -13,6 +15,7 @@ object Form1: TForm1
   KeyPreview = True
   OldCreateOrder = False
   Position = poDesigned
+  OnActivate = FormActivate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
@@ -24,6 +27,7 @@ object Form1: TForm1
     Height = 333
     ActivePage = TabSheet1
     TabOrder = 0
+    TabStop = False
     object TabSheet1: TTabSheet
       AlignWithMargins = True
       Caption = 'Cadastro'
@@ -55,14 +59,6 @@ object Form1: TForm1
         Height = 13
         Caption = 'Telefone'
       end
-      object Edit1: TEdit
-        Left = 56
-        Top = 27
-        Width = 177
-        Height = 21
-        TabOrder = 0
-        OnExit = Edit1Exit
-      end
       object Edit2: TEdit
         Left = 56
         Top = 83
@@ -70,21 +66,7 @@ object Form1: TForm1
         Height = 21
         TabOrder = 1
         OnExit = Edit2Exit
-      end
-      object Edit3: TEdit
-        Left = 56
-        Top = 147
-        Width = 177
-        Height = 21
-        TabOrder = 2
-        OnExit = Edit3Exit
-      end
-      object Edit4: TEdit
-        Left = 56
-        Top = 211
-        Width = 177
-        Height = 21
-        TabOrder = 3
+        OnKeyPress = Edit2KeyPress
       end
       object Button1: TButton
         Left = 56
@@ -93,6 +75,45 @@ object Form1: TForm1
         Height = 25
         Caption = 'Cadastrar'
         TabOrder = 4
+      end
+      object MaskEdit3: TMaskEdit
+        Left = 56
+        Top = 211
+        Width = 177
+        Height = 21
+        EditMask = '!\(99\) 99999-9999;1;_'
+        MaxLength = 15
+        TabOrder = 3
+        Text = '(  )      -    '
+      end
+      object MaskEdit1: TMaskEdit
+        Left = 56
+        Top = 27
+        Width = 177
+        Height = 21
+        EditMask = '999.999.999-99;1;_'
+        MaxLength = 14
+        TabOrder = 0
+        Text = '   .   .   -  '
+        OnExit = MaskEdit1Exit
+      end
+      object MaskEdit2: TMaskEdit
+        Left = 56
+        Top = 147
+        Width = 175
+        Height = 21
+        EditMask = '999;1;_'
+        MaxLength = 3
+        TabOrder = 2
+        Text = '   '
+        OnExit = MaskEdit2Exit
+      end
+      object Edit3: TEdit
+        Left = 56
+        Top = 147
+        Width = 177
+        Height = 21
+        TabOrder = 5
       end
     end
     object TabSheet2: TTabSheet
@@ -105,14 +126,6 @@ object Form1: TForm1
         Height = 13
         Caption = '*CPF'
       end
-      object Edit5: TEdit
-        Left = 56
-        Top = 27
-        Width = 177
-        Height = 21
-        TabOrder = 0
-        OnExit = Edit5Exit
-      end
       object Button2: TButton
         Left = 56
         Top = 88
@@ -120,6 +133,17 @@ object Form1: TForm1
         Height = 25
         Caption = 'Pesquisar'
         TabOrder = 1
+      end
+      object MaskEdit4: TMaskEdit
+        Left = 56
+        Top = 27
+        Width = 177
+        Height = 21
+        EditMask = '999.999.999-99;1;_'
+        MaxLength = 14
+        TabOrder = 0
+        Text = '   .   .   -  '
+        OnExit = MaskEdit4Exit
       end
     end
   end
