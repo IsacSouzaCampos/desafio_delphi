@@ -1,6 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderStyle = bsSizeToolWin
   Caption = 'Form1'
   ClientHeight = 186
   ClientWidth = 443
@@ -12,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
