@@ -114,16 +114,23 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       AlignWithMargins = True
       Caption = 'Pesquisa'
-      object LabelCPFSearch: TLabel
-        Left = 56
+      object LabelSearch: TLabel
+        Left = 3
         Top = 216
         Width = 25
         Height = 13
         Caption = '*CPF'
       end
+      object LabelTotal: TLabel
+        Left = 3
+        Top = 175
+        Width = 31
+        Height = 13
+        Caption = 'Total: '
+      end
       object ButtonSearch: TButton
-        Left = 56
-        Top = 263
+        Left = 0
+        Top = 262
         Width = 177
         Height = 25
         Caption = 'Pesquisar'
@@ -131,7 +138,7 @@ object Form1: TForm1
         OnClick = ButtonSearchClick
       end
       object MaskCPFSearch: TMaskEdit
-        Left = 56
+        Left = 3
         Top = 235
         Width = 177
         Height = 21
@@ -178,13 +185,38 @@ object Form1: TForm1
           end>
       end
       object ButtonShowAll: TButton
-        Left = 184
+        Left = 192
         Top = 175
-        Width = 95
+        Width = 87
         Height = 25
         Caption = 'Mostrar Todos'
         TabOrder = 3
         OnClick = ButtonShowAllClick
+      end
+      object MaskAgeSearch: TMaskEdit
+        Left = 3
+        Top = 235
+        Width = 173
+        Height = 21
+        EditMask = '999;1;_'
+        MaxLength = 3
+        TabOrder = 4
+        Text = '   '
+        Visible = False
+        OnExit = MaskAgeSearchExit
+      end
+      object RadioGroup: TRadioGroup
+        Left = 186
+        Top = 235
+        Width = 90
+        Height = 59
+        Caption = 'Filtro'
+        ItemIndex = 0
+        Items.Strings = (
+          'CPF'
+          'Idade')
+        TabOrder = 5
+        OnClick = RadioGroupClick
       end
     end
   end

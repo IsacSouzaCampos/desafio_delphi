@@ -5,27 +5,30 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, uDados, FireDAC.Stan.Param;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, uDados, FireDAC.Stan.Param, Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
-    LabelCPFInput : TLabel;
-    LabelName     : TLabel;
-    EditName      : TEdit;
-    LabelAge      : TLabel;
-    LabelPhone    : TLabel;
-    PageControl1  : TPageControl;
-    TabSheet1     : TTabSheet;
-    TabSheet2     : TTabSheet;
-    ButtonInsert  : TButton;
-    LabelCPFSearch: TLabel;
-    ButtonSearch  : TButton;
-    MaskCPFSearch : TMaskEdit;
-    MaskPhone     : TMaskEdit;
-    MaskCPFInput  : TMaskEdit;
-    DBGrid1       : TDBGrid;
-    MaskAge       : TMaskEdit;
+    LabelCPFInput: TLabel;
+    LabelName    : TLabel;
+    EditName     : TEdit;
+    LabelAge     : TLabel;
+    LabelPhone   : TLabel;
+    PageControl1 : TPageControl;
+    TabSheet1    : TTabSheet;
+    TabSheet2    : TTabSheet;
+    ButtonInsert : TButton;
+    LabelSearch  : TLabel;
+    ButtonSearch : TButton;
+    MaskCPFSearch: TMaskEdit;
+    MaskPhone    : TMaskEdit;
+    MaskCPFInput : TMaskEdit;
+    DBGrid1      : TDBGrid;
+    MaskAge      : TMaskEdit;
     ButtonShowAll: TButton;
+    RadioGroup   : TRadioGroup;
+    MaskAgeSearch: TMaskEdit;
+    LabelTotal   : TLabel;
 
     procedure FormActivate(Sender: TObject);
     procedure EditNameKeyPress(Sender: TObject; var Key: Char);
@@ -39,6 +42,8 @@ type
     procedure MaskAgeExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ButtonShowAllClick(Sender: TObject);
+    procedure RadioGroupClick(Sender: TObject);
+    procedure MaskAgeSearchExit(Sender: TObject);
 
   private
     { Private declarations }
@@ -46,6 +51,7 @@ type
     ValidCPFSearch: Boolean;
     ValidName     : Boolean;
     ValidAge      : Boolean;
+    ValidAgeSearch: Boolean;
     ValidPhone    : Boolean;
 
     function IsCPFValid(MaskEdit: TMaskEdit): Boolean;
@@ -83,6 +89,7 @@ begin
   ValidCPFSearch := True;
   ValidName      := True;
   ValidAge       := True;
+  ValidAgeSearch := True;
   ValidPhone     := True;
 end;
 
@@ -127,28 +134,64 @@ end;
 
 procedure TForm1.ButtonSearchClick(Sender: TObject);
 var
-  strCPF: String;
+  strCPF  : String;
+  intAge  : Integer;
+  intCount: Integer;
 begin
-  if not ValidCPFSearch then
+  if RadioGroup.ItemIndex = 0 then
     begin
-      ShowMessage('Certifique-se de que os dados são válidos!');
-      MaskCPFSearch.SetFocus;
+      if not ValidCPFSearch then
+        begin
+          ShowMessage('Certifique-se de que os dados são válidos!');
+          MaskCPFSearch.SetFocus;
+        end
+      else
+        begin
+          strCPF := MaskCPFSearch.Text;
+          with dmDados.qryBanco do
+            begin
+              Close;
+              Sql.Clear;
+              Sql.Add('SELECT * FROM CADASTRO WHERE CPF = :CPF');
+              ParamByName('CPF').AsString := strCPF;
+              Open;
+            end;
+
+          intCount := uDados.dmDados.DataSource1.DataSet.RecordCount;
+          LabelTotal.Caption := 'Total: ' + IntToStr(intCount);
+        end;
     end
+
   else
     begin
-      strCPF := MaskCPFSearch.Text;
-      with dmDados.qryBanco do
+      if not ValidAgeSearch then
         begin
-          Close;
-          Sql.Clear;
-          Sql.Add('SELECT * FROM CADASTRO WHERE CPF = :CPF');
-          ParamByName('CPF').AsString := strCPF;
-          Open;
+          ShowMessage('Certifique-se de que os dados são válidos!');
+          MaskAgeSearch.SetFocus;
+        end
+      else
+        begin
+          intAge := StrToInt(
+                      StringReplace(MaskAgeSearch.Text, ' ', '', [rfReplaceAll])
+                    );
+          with dmDados.qryBanco do
+            begin
+              Close;
+              Sql.Clear;
+              Sql.Add('SELECT * FROM CADASTRO WHERE IDADE = :AGE');
+              ParamByName('AGE').AsInteger := intAge;
+              Open;
+            end;
+
+          intCount := uDados.dmDados.DataSource1.DataSet.RecordCount;
+          LabelTotal.Caption := 'Total: ' + IntToStr(intCount);
         end;
     end;
 end;
 
 procedure TForm1.ButtonShowAllClick(Sender: TObject);
+var
+  intCount: Integer;
 begin
   with dmDados.qryBanco do
     begin
@@ -157,6 +200,9 @@ begin
       Sql.Add('SELECT * FROM CADASTRO');
       Open;
     end;
+
+  intCount := uDados.dmDados.DataSource1.DataSet.RecordCount;
+  LabelTotal.Caption := 'Total: ' + IntToStr(intCount);
 end;
 
 procedure TForm1.ClearAll;
@@ -203,6 +249,26 @@ begin
     end;
 end;
 
+procedure TForm1.MaskAgeSearchExit(Sender: TObject);
+var
+  strAux: String;
+begin
+  strAux := StringReplace(MaskAgeSearch.Text, ' ', '', [rfReplaceAll]);
+
+  if strAux = '' then
+    begin
+      ValidAgeSearch         := False;
+      LabelSearch.Font.Color := clRed;
+      MaskAgeSearch.Color    := clCream;
+    end
+  else
+    begin
+      ValidAgeSearch         := True;
+      LabelSearch.Font.Color := clWindowText;
+      MaskAgeSearch.Color    := clWindow;
+    end;
+end;
+
 procedure TForm1.MaskCPFInputExit(Sender: TObject);
 begin
   if not IsCPFValid(MaskCPFInput) then
@@ -223,19 +289,38 @@ end;
 
 procedure TForm1.MaskCPFSearchExit(Sender: TObject);
 begin
-  if not IsCPFValid(MaskCPFSearch) then
+  if RadioGroup.ItemIndex = 0 then
     begin
-      ValidCPFSearch            := False;
-      LabelCPFSearch.Caption    := '*CPF (inválido)';
-      LabelCPFSearch.Font.Color := clRed;
-      MaskCPFSearch.Color       := clCream;
+      if not IsCPFValid(MaskCPFSearch) then
+        begin
+          ValidCPFSearch         := False;
+          LabelSearch.Caption    := '*CPF (inválido)';
+          LabelSearch.Font.Color := clRed;
+          MaskCPFSearch.Color    := clCream;
+        end
+      else
+        begin
+          ValidCPFSearch         := True;
+          LabelSearch.Caption    := '*CPF';
+          LabelSearch.Font.Color := clWindowText;
+          MaskCPFSearch.Color    := clWindow;
+        end;
+    end;
+end;
+
+procedure TForm1.RadioGroupClick(Sender: TObject);
+begin
+  if RadioGroup.ItemIndex = 0 then
+    begin
+      LabelSearch.Caption   := '*CPF';
+      MaskCPFSearch.Visible := True;
+      MaskAgeSearch.Visible := False;
     end
   else
     begin
-      ValidCPFSearch            := True;
-      LabelCPFSearch.Caption    := '*CPF';
-      LabelCPFSearch.Font.Color := clWindowText;
-      MaskCPFSearch.Color       := clWindow;
+      LabelSearch.Caption   := '*Idade';
+      MaskAgeSearch.Visible := True;
+      MaskCPFSearch.Visible := False;
     end;
 end;
 
