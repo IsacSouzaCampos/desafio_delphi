@@ -68,7 +68,7 @@ begin
     begin
       RadioGroup1.CleanupInstance;
       ShowMessage('O resultado atingido pelo valor escolhido é muito grande ' +
-                  'para ser computado. Escolha um valor até 92.')
+                  'para ser computado. Escolha um valor até 93.')
     end
   else if intPosition > 0 then
     begin
