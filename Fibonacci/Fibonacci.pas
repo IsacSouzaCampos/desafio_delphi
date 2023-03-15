@@ -3,7 +3,7 @@ unit Fibonacci;
 interface
 
 type
-  TIntegerArray = array of Integer;
+  TIntegerArray = array of Int64;
 
   TFibonacci = class
     IntegerArray: TIntegerArray;
@@ -20,9 +20,9 @@ function TFibonacci.Linear(intPosition: Integer): TIntegerArray;
 var
   I         : Integer;
   intLength : Integer;
-  intPrev1  : Integer;
-  intPrev2  : Integer;
-  intCurrent: Integer;
+  intPrev1  : Int64;
+  intPrev2  : Int64;
+  intCurrent: Int64;
 begin
   IntegerArray := [];
   SetLength(IntegerArray, 1);
@@ -52,7 +52,8 @@ end;
 
 function TFibonacci.Recursive(intPosition: Integer): TIntegerArray;
 var
-  intAux, intLength: Integer;
+  intLength: Integer;
+  intAux   : Int64;
 begin
   IntegerArray := [];
   SetLength(IntegerArray, 0);

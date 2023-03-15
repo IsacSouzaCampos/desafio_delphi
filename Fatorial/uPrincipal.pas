@@ -61,16 +61,27 @@ begin
       end;
 
       if intValue < 0 then
-        ShowMessage('O valor informado deve ser positivo!');
-
-      if intValue = 0 then
-        Edit2.Text := '1'
-      else if RadioGroup1.ItemIndex = 0 then
-        Edit2.Text := IntToStr(Fatorial.Linear(intValue))
-      else if RadioGroup1.ItemIndex = 1 then
-        Edit2.Text := IntToStr(Fatorial.Recursive(intValue))
+        begin
+          Edit2.Text := '';
+          ShowMessage('O valor informado deve ser positivo!');
+        end
+      else if intValue > 20 then
+        begin
+          Edit2.Text := '';
+          ShowMessage('O resultado do valor informado é muito grande e ' +
+                    'não pode ser computado. Escolha um valor até 20!');
+        end
       else
-        ShowMessage('Defina o algoritmo a ser usado!');
+        begin
+          if intValue = 0 then
+            Edit2.Text := '1'
+          else if RadioGroup1.ItemIndex = 0 then
+            Edit2.Text := IntToStr(Fatorial.Linear(intValue))
+          else if RadioGroup1.ItemIndex = 1 then
+            Edit2.Text := IntToStr(Fatorial.Recursive(intValue))
+          else
+            ShowMessage('Defina o algoritmo a ser usado!');
+        end;
     end;
 
   Edit1.SetFocus;

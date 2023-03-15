@@ -39,16 +39,7 @@ object Form1: TForm1
     Width = 153
     Height = 146
     ItemHeight = 13
-    TabOrder = 3
-  end
-  object Edit1: TEdit
-    Left = 64
-    Top = 197
-    Width = 57
-    Height = 21
-    NumbersOnly = True
-    TabOrder = 0
-    OnExit = Edit1Exit
+    TabOrder = 2
   end
   object Button1: TButton
     Left = 8
@@ -56,7 +47,7 @@ object Form1: TForm1
     Width = 113
     Height = 25
     Caption = 'Gerar'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = Button1Click
   end
   object RadioGroup1: TRadioGroup
@@ -69,6 +60,17 @@ object Form1: TForm1
     Items.Strings = (
       'Linear'
       'Recursivo')
-    TabOrder = 1
+    TabOrder = 0
+  end
+  object MaskPosition: TMaskEdit
+    Left = 64
+    Top = 197
+    Width = 56
+    Height = 21
+    EditMask = '99;1;_'
+    MaxLength = 2
+    TabOrder = 3
+    Text = '  '
+    OnExit = MaskPositionExit
   end
 end

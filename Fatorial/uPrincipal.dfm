@@ -4,7 +4,7 @@ object Form1: TForm1
   BorderStyle = bsSizeToolWin
   Caption = 'Fatorial'
   ClientHeight = 123
-  ClientWidth = 260
+  ClientWidth = 312
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -36,7 +36,7 @@ object Form1: TForm1
   object Edit1: TEdit
     Left = 74
     Top = 21
-    Width = 65
+    Width = 95
     Height = 21
     TabOrder = 0
     OnExit = Edit1Exit
@@ -44,7 +44,7 @@ object Form1: TForm1
   object Edit2: TEdit
     Left = 74
     Top = 45
-    Width = 65
+    Width = 95
     Height = 21
     ReadOnly = True
     TabOrder = 3
@@ -52,14 +52,14 @@ object Form1: TForm1
   object Button1: TButton
     Left = 16
     Top = 80
-    Width = 123
+    Width = 153
     Height = 25
     Caption = 'Calcular'
     TabOrder = 2
     OnClick = Button1Click
   end
   object RadioGroup1: TRadioGroup
-    Left = 160
+    Left = 208
     Top = 21
     Width = 81
     Height = 84

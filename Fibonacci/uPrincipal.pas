@@ -14,23 +14,23 @@ uses
   Vcl.Dialogs,
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
-  Fibonacci;
+  Fibonacci, Vcl.Mask;
 
 type
-  TIntegerArray = array of Integer;
+  TIntegerArray = array of Int64;
   TForm1 = class(TForm)
     ListBox1: TListBox;
     Label1: TLabel;
     Label2: TLabel;
-    Edit1: TEdit;
     Button1: TButton;
     RadioGroup1: TRadioGroup;
+    MaskPosition: TMaskEdit;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Edit1Exit(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure MaskPositionExit(Sender: TObject);
   private
     { Private declarations }
     Fibonacci: TFibonacci;
@@ -47,51 +47,48 @@ implementation
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  intPosition    : Integer;
-  I              : Integer;
+  strAux     : String;
+  intPosition: Integer;
+  I          : Int64;
 begin
   ListBox1.Items.Clear;
 
-  if Edit1.Text = '' then
-    ShowMessage('Defina uma posição da lista de Fibonacci!')
-  else
+  intPosition := 0;
+  strAux      := StringReplace(MaskPosition.Text, ' ', '', [rfReplaceAll]);
+
+  if strAux = '' then
     begin
-      intPosition := StrToInt(Trim(Edit1.Text));
-
-      if intPosition > 0 then
-        begin
-          if RadioGroup1.ItemIndex = 0 then
-            begin
-              Fibonacci.Linear(intPosition);
-              for I in Fibonacci.IntegerArray do
-                ListBox1.Items.Add(IntToStr(I))
-            end
-          else if RadioGroup1.ItemIndex = 1 then
-            begin
-              Fibonacci.Recursive(intPosition + 1);
-              for I in Fibonacci.IntegerArray do
-                ListBox1.Items.Add(IntToStr(I))
-            end
-          else
-            ShowMessage('Escolha o tipo de algoritmo a ser executado!');
-        end;
-    end;
-
-    Edit1.SetFocus;
-end;
-
-procedure TForm1.Edit1Exit(Sender: TObject);
-begin
-  if Edit1.Text = '' then
-    begin
-      Label2.Font.Color := clRed;
-      Edit1.Color       := clCream;
+      RadioGroup1.CleanupInstance;
+      ShowMessage('Defina uma posição da lista de Fibonacci!');
     end
   else
+    intPosition := StrToInt(strAux);
+
+  if intPosition > 93 then
     begin
-      Label2.Font.Color := clWindowText;
-      Edit1.Color       := clWindow;
+      RadioGroup1.CleanupInstance;
+      ShowMessage('O resultado atingido pelo valor escolhido é muito grande ' +
+                  'para ser computado. Escolha um valor até 92.')
+    end
+  else if intPosition > 0 then
+    begin
+      if RadioGroup1.ItemIndex = 0 then
+        begin
+          Fibonacci.Linear(intPosition);
+          for I in Fibonacci.IntegerArray do
+            ListBox1.Items.Add(IntToStr(I))
+        end
+      else if RadioGroup1.ItemIndex = 1 then
+        begin
+          Fibonacci.Recursive(intPosition + 1);
+          for I in Fibonacci.IntegerArray do
+            ListBox1.Items.Add(IntToStr(I))
+        end
+      else
+        ShowMessage('Escolha o tipo de algoritmo a ser executado!');
     end;
+
+    MaskPosition.SetFocus;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -116,6 +113,20 @@ procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   if key = #13 then
     key := #0;
+end;
+
+procedure TForm1.MaskPositionExit(Sender: TObject);
+begin
+  if MaskPosition.Text = '' then
+    begin
+      Label2.Font.Color := clRed;
+      MaskPosition.Color       := clCream;
+    end
+  else
+    begin
+      Label2.Font.Color := clWindowText;
+      MaskPosition.Color       := clWindow;
+    end;
 end;
 
 end.
