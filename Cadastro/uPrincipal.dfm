@@ -16,6 +16,7 @@ object Form1: TForm1
   OldCreateOrder = False
   Position = poDesigned
   OnActivate = FormActivate
+  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
@@ -31,52 +32,53 @@ object Form1: TForm1
     object TabSheet1: TTabSheet
       AlignWithMargins = True
       Caption = 'Cadastro'
-      object Label1: TLabel
+      object LabelCPFInput: TLabel
         Left = 56
         Top = 8
         Width = 25
         Height = 13
         Caption = '*CPF'
       end
-      object Label2: TLabel
+      object LabelName: TLabel
         Left = 56
         Top = 64
         Width = 81
         Height = 13
         Caption = '*Nome Completo'
       end
-      object Label3: TLabel
+      object LabelAge: TLabel
         Left = 56
         Top = 128
         Width = 34
         Height = 13
         Caption = '*Idade'
       end
-      object Label4: TLabel
+      object LabelPhone: TLabel
         Left = 56
         Top = 192
         Width = 42
         Height = 13
         Caption = 'Telefone'
       end
-      object Edit2: TEdit
+      object EditName: TEdit
         Left = 56
         Top = 83
         Width = 177
         Height = 21
         TabOrder = 1
-        OnExit = Edit2Exit
-        OnKeyPress = Edit2KeyPress
+        OnExit = EditNameExit
+        OnKeyPress = EditNameKeyPress
       end
-      object Button1: TButton
+      object ButtonInsert: TButton
         Left = 56
-        Top = 264
+        Top = 263
         Width = 177
         Height = 25
         Caption = 'Cadastrar'
         TabOrder = 4
+        OnClick = ButtonInsertClick
       end
-      object MaskEdit3: TMaskEdit
+      object MaskPhone: TMaskEdit
         Left = 56
         Top = 211
         Width = 177
@@ -86,7 +88,7 @@ object Form1: TForm1
         TabOrder = 3
         Text = '(  )      -    '
       end
-      object MaskEdit1: TMaskEdit
+      object MaskCPFInput: TMaskEdit
         Left = 56
         Top = 27
         Width = 177
@@ -95,9 +97,9 @@ object Form1: TForm1
         MaxLength = 14
         TabOrder = 0
         Text = '   .   .   -  '
-        OnExit = MaskEdit1Exit
+        OnExit = MaskCPFInputExit
       end
-      object MaskEdit2: TMaskEdit
+      object MaskAge: TMaskEdit
         Left = 56
         Top = 147
         Width = 175
@@ -106,44 +108,83 @@ object Form1: TForm1
         MaxLength = 3
         TabOrder = 2
         Text = '   '
-        OnExit = MaskEdit2Exit
-      end
-      object Edit3: TEdit
-        Left = 56
-        Top = 147
-        Width = 177
-        Height = 21
-        TabOrder = 5
+        OnExit = MaskAgeExit
       end
     end
     object TabSheet2: TTabSheet
       AlignWithMargins = True
       Caption = 'Pesquisa'
-      object Label5: TLabel
+      object LabelCPFSearch: TLabel
         Left = 56
-        Top = 8
+        Top = 216
         Width = 25
         Height = 13
         Caption = '*CPF'
       end
-      object Button2: TButton
+      object ButtonSearch: TButton
         Left = 56
-        Top = 88
+        Top = 263
         Width = 177
         Height = 25
         Caption = 'Pesquisar'
         TabOrder = 1
+        OnClick = ButtonSearchClick
       end
-      object MaskEdit4: TMaskEdit
+      object MaskCPFSearch: TMaskEdit
         Left = 56
-        Top = 27
+        Top = 235
         Width = 177
         Height = 21
         EditMask = '999.999.999-99;1;_'
         MaxLength = 14
         TabOrder = 0
         Text = '   .   .   -  '
-        OnExit = MaskEdit4Exit
+        OnExit = MaskCPFSearchExit
+      end
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 282
+        Height = 169
+        Align = alTop
+        DataSource = dmDados.DataSource1
+        TabOrder = 2
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'CPF'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NOME_COMPLETO'
+            Width = 108
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'IDADE'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'TELEFONE'
+            Visible = True
+          end>
+      end
+      object ButtonShowAll: TButton
+        Left = 184
+        Top = 175
+        Width = 95
+        Height = 25
+        Caption = 'Mostrar Todos'
+        TabOrder = 3
+        OnClick = ButtonShowAllClick
       end
     end
   end
